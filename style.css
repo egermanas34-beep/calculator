@@ -98,8 +98,19 @@ body {
     width: 360px;
     background-color: #e49bc7;
     border-radius: 60px;
+    transition: width 0.4s ease;
   }
-
+  .calculator.platus {
+    width: 750px;
+  }
+  .calculator.platus .daugiau-mygtukai {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+  }
+  .calculator.platus .mygtukai {
+    grid-template-columns: repeat(5, 1fr);
+  }
   .daugiau-mygtukai {
     display: none;
   }
