@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #fff;
+  color: #ffffff;
+}
+.calculator {
+  width: 530px;
+  padding: 32px;
+
+  background-color: #f59cca;
+  border-radius: 45px;
+}
+.calculator-screen {
+  width: 100%;
+  height: 120px;
+
+  margin-bottom: 20px;
+  padding: 15px;
+
+  border: none;
+  background-color: white;
+
+  font-size: 32px;
+  text-align: right;
+}
+.daugiau {
+  display: none;
+}
+.daugiau-mygtukai {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+.mygtukas-clear {
+  background-color: #f60000;
+  border-radius: 15px;
+  height: 64px;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+.mygtukas-clear:hover {
+  opacity: 0.8;
+}
+.mygtukai {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.special,
+.operator,
+.skaicius,
+.lygu {
+  height: 64px;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+.special,
+.operator {
+  background-color: #8437cb;
+}
+.skaicius {
+  background-color: #8ba35b;
+}
+
+.lygu {
+  background-color: #000000;
+}
+.special:hover,
+.operator:hover,
+.skaicius:hover,
+.lygu:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .calculator {
+    width: 360px;
+    background-color: #e49bc7;
+    border-radius: 60px;
+  }
+
+  .daugiau-mygtukai {
+    display: none;
+  }
+
+  .mygtukai {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .operator,
+  .skaicius,
+  .lygu {
+    height: 58px;
+    border-radius: 15px;
+  }
+  .daugiau {
+    display: block;
+    background-color: #8437cb;
+    border-radius: 15px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    height: 58px;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  .daugiau-mygtukai.rodyti {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
