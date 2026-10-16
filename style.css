@@ -147,3 +147,8 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (min-width: 600px) {
+  .mygtukas-clear {
+    grid-column: span 4;
+  }
+}
