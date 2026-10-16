@@ -61,8 +61,8 @@ body {
 }
 .mygtukai {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 .special,
 .operator,
@@ -92,6 +92,10 @@ body {
 .lygu:hover {
   opacity: 0.8;
 }
+.mygtukas-clear,
+.daugiau {
+  grid-column: span 2;
+}
 
 @media (max-width: 600px) {
   .calculator {
@@ -109,7 +113,7 @@ body {
     gap: 15px;
   }
   .calculator.platus .mygtukai {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
   .daugiau-mygtukai {
     display: none;
