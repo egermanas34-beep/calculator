@@ -72,10 +72,16 @@ lygu.addEventListener("click", function () {
       let result;
       if (operator === "*") {
         result = left * right;
+      } else if (operator === "/") {
+        if (right === 0) {
+          alert("Dalyba iš nulio negalima!");
+          //screen.value = "Dalyba iš nulio negalima!";
+          return;
+        } else {
+          result = left / right;
+        }
       }
-      if (operator === "/") {
-        result = left / right;
-      }
+
       temp.splice(i - 1, 3, result);
       i = 1; // Move back one index to re-evaluate the new value
     } else {
