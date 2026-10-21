@@ -89,6 +89,15 @@ lygu.addEventListener("click", function () {
   const specialOperatorSymbols = ["^2", "^", "√", "⅟", "lg"];
   const parts = [];
   let number = "";
+  const lastChar = screen.value.slice(-1);
+  if (
+    operatorSymbols.includes(lastChar) ||
+    specialOperatorSymbols.includes(lastChar) ||
+    screen.value.endsWith("lg")
+  ) {
+    alert("Paskutinis simbolis negali būti operatorius!");
+    return;
+  }
   for (let i = 0; i < tekstas.length; i++) {
     const char = tekstas[i];
     if (tekstas.startsWith("lg", i)) {
