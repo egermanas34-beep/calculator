@@ -57,7 +57,11 @@ specialOperators.forEach(function (button) {
       screen.value = screen.value.slice(0, -1);
       screen.value += button.textContent;
     } else {
-      screen.value += button.textContent;
+      if (button.textContent === "^n") {
+        screen.value += "^";
+      } else {
+        screen.value += button.textContent;
+      }
     }
   });
 });
@@ -67,9 +71,13 @@ lygu.addEventListener("click", function () {
   const operatorSymbols = ["+", "-", "*", "/"];
   const parts = [];
   let number = "";
+  const specialOperatorSymbols = ["^2", "^", "√", "1/x", "lg"];
   for (let i = 0; i < tekstas.length; i++) {
     const char = tekstas[i];
-    if (operatorSymbols.includes(char)) {
+    if (
+      operatorSymbols.includes(char) ||
+      specialOperatorSymbols.includes(char)
+    ) {
       parts.push(Number(number)); // Add the number before the operator
       parts.push(char); // Add the operator
       number = "";
@@ -80,6 +88,17 @@ lygu.addEventListener("click", function () {
   parts.push(Number(number)); // Add the last number
   console.log(parts);
   let temp = [...parts];
+  for (let i = 1; i < temp.length; ) {
+    if (temp[i] === "^") {
+      const left = temp[i - 1];
+      const right = temp[i + 1];
+      const result = Math.pow(left, right);
+      temp.splice(i - 1, 3, result);
+      i = 1; // Move back one index to re-evaluate the new value
+    } else {
+      i += 2;
+    }
+  }
   for (let i = 1; i < temp.length; ) {
     const operator = temp[i];
     if (operator === "*" || operator === "/") {
