@@ -44,12 +44,17 @@ operators.forEach(function (button) {
     const lastChar = screen.value.slice(-1);
     const operatorSymbols = ["+", "-", "*", "/"];
 
-    if (screen.value === "") {
+    if (screen.value === "" && button.textContent !== "-") {
+      return;
+    }
+    if (button.textContent === "-" && ["+", "*", "/"].includes(lastChar)) {
+      screen.value += button.textContent;
       return;
     }
     if (operatorSymbols.includes(lastChar)) {
-      screen.value = screen.value.slice(0, -1);
-      screen.value += button.textContent;
+      // Check if the last character is an operator{
+      screen.value = screen.value.slice(0, -1); // Remove the last operator
+      screen.value += button.textContent; // Add the new operator
     } else {
       screen.value += button.textContent;
     }
@@ -100,6 +105,14 @@ lygu.addEventListener("click", function () {
   }
   for (let i = 0; i < tekstas.length; i++) {
     const char = tekstas[i];
+    const prevChar = tekstas[i - 1];
+    if (
+      (char === "-" && i === 0) ||
+      ["+", "-", "*", "/", "^", "⅟"].includes(prevChar)
+    ) {
+      number += char;
+      continue;
+    }
     if (tekstas.startsWith("lg", i)) {
       if (number !== "") {
         parts.push(Number(number));
@@ -228,6 +241,11 @@ lygu.addEventListener("click", function () {
       result -= right;
     }
   }
+  if (!Number.isFinite(result)) {
+    alert("Rezultatas yra per didelis arba neapibrėžtas!");
+    return;
+  }
+  result = Number(result.toFixed(10)); // Round to 10 decimal places
   console.log(result);
   screen.value = result;
 });
