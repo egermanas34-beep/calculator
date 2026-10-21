@@ -45,6 +45,22 @@ operators.forEach(function (button) {
     }
   });
 });
+const specialOperators = document.querySelectorAll(".special");
+specialOperators.forEach(function (button) {
+  button.addEventListener("click", function () {
+    const lastChar = screen.value.slice(-1);
+    const specialOperatorSymbols = ["^2", "^n", "√", "1/x", "lg"];
+    if (screen.value === "") {
+      return;
+    }
+    if (specialOperatorSymbols.includes(lastChar)) {
+      screen.value = screen.value.slice(0, -1);
+      screen.value += button.textContent;
+    } else {
+      screen.value += button.textContent;
+    }
+  });
+});
 const lygu = document.querySelector(".lygu");
 lygu.addEventListener("click", function () {
   const tekstas = screen.value;
