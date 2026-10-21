@@ -50,7 +50,12 @@ specialOperators.forEach(function (button) {
   button.addEventListener("click", function () {
     const lastChar = screen.value.slice(-1);
     const specialOperatorSymbols = ["^2", "^n", "√", "1/x", "lg"];
-    if (screen.value === "") {
+    if (
+      screen.value === "" &&
+      button.textContent !== "√" &&
+      button.textContent !== "lg" &&
+      button.textContent !== "1/x"
+    ) {
       return;
     }
     if (specialOperatorSymbols.includes(lastChar)) {
@@ -59,6 +64,8 @@ specialOperators.forEach(function (button) {
     } else {
       if (button.textContent === "^n") {
         screen.value += "^";
+      } else if (button.textContent === "1/x") {
+        screen.value += "⅟";
       } else {
         screen.value += button.textContent;
       }
@@ -69,23 +76,39 @@ const lygu = document.querySelector(".lygu");
 lygu.addEventListener("click", function () {
   const tekstas = screen.value;
   const operatorSymbols = ["+", "-", "*", "/"];
+  const specialOperatorSymbols = ["^2", "^", "√", "⅟", "lg"];
   const parts = [];
   let number = "";
-  const specialOperatorSymbols = ["^2", "^", "√", "1/x", "lg"];
   for (let i = 0; i < tekstas.length; i++) {
     const char = tekstas[i];
+    if (tekstas.startsWith("lg", i)) {
+      if (number !== "") {
+        parts.push(Number(number));
+        number = "";
+      }
+
+      parts.push("lg");
+      i++;
+      continue;
+    }
     if (
       operatorSymbols.includes(char) ||
       specialOperatorSymbols.includes(char)
     ) {
-      parts.push(Number(number)); // Add the number before the operator
+      if (number !== "") {
+        parts.push(Number(number));
+      }
+      // Add the number before the operator
       parts.push(char); // Add the operator
       number = "";
     } else {
       number += char;
     }
   }
-  parts.push(Number(number)); // Add the last number
+  if (number !== "") {
+    parts.push(Number(number));
+  }
+  // Add the last number
   console.log(parts);
   let temp = [...parts];
   for (let i = 1; i < temp.length; ) {
@@ -97,6 +120,57 @@ lygu.addEventListener("click", function () {
       i = 1; // Move back one index to re-evaluate the new value
     } else {
       i += 2;
+    }
+  }
+  for (let i = 0; i < temp.length; ) {
+    const operator = temp[i];
+    if (operator === "^2") {
+      const left = temp[i - 1];
+      const result = Math.pow(left, 2);
+      temp.splice(i - 1, 2, result);
+      i = 0; // Move back one index to re-evaluate the new value
+    } else if (operator === "√") {
+      const right = temp[i + 1];
+      if (right < 0) {
+        alert("Kvadratinė šaknis iš neigiamo skaičiaus negalima!");
+        return;
+      }
+      const result = Math.sqrt(right);
+      if (typeof temp[i - 1] === "number") {
+        temp.splice(i, 2, "*", result);
+      } else {
+        temp.splice(i, 2, result);
+      }
+
+      i = 0; // Move back one index to re-evaluate the new value
+    } else if (operator === "⅟") {
+      const right = temp[i + 1];
+      if (right === 0) {
+        alert("Dalyba iš nulio negalima!");
+        return;
+      }
+      const result = 1 / right;
+      if (typeof temp[i - 1] === "number") {
+        temp.splice(i, 2, "*", result);
+      } else {
+        temp.splice(i, 2, result);
+      }
+      i = 0; // Move back one index to re-evaluate the new value
+    } else if (operator === "lg") {
+      const right = temp[i + 1];
+      if (right <= 0) {
+        alert("Logaritmas iš neigiamo skaičiaus arba nulio negalimas!");
+        return;
+      }
+      const result = Math.log10(right);
+      if (typeof temp[i - 1] === "number") {
+        temp.splice(i, 2, "*", result);
+      } else {
+        temp.splice(i, 2, result);
+      }
+      i = 0; // Move back one index to re-evaluate the new value
+    } else {
+      i++;
     }
   }
   for (let i = 1; i < temp.length; ) {
