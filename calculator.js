@@ -95,6 +95,9 @@ lygu.addEventListener("click", function () {
   const parts = [];
   let number = "";
   const lastChar = screen.value.slice(-1);
+  if (tekstas.trim() === "") {
+    return;
+  }
   if (
     operatorSymbols.includes(lastChar) ||
     specialOperatorSymbols.includes(lastChar) ||
@@ -107,8 +110,9 @@ lygu.addEventListener("click", function () {
     const char = tekstas[i];
     const prevChar = tekstas[i - 1];
     if (
-      (char === "-" && i === 0) ||
-      ["+", "-", "*", "/", "^", "⅟"].includes(prevChar)
+      (char === "-" &&
+        (i === 0 || ["+", "-", "*", "/", "^", "⅟", "√"].includes(prevChar))) ||
+      tekstas.slice(0, i).endsWith("lg")
     ) {
       number += char;
       continue;
@@ -142,6 +146,7 @@ lygu.addEventListener("click", function () {
   }
   // Add the last number
   console.log(parts);
+  console.log("Pradinis masyvas:", parts);
   let temp = [...parts];
   for (let i = temp.length - 2; i >= 1; i--) {
     if (temp[i] === "^") {
@@ -203,6 +208,7 @@ lygu.addEventListener("click", function () {
       continue;
     }
   }
+  console.log("Po specialių operacijų:", temp);
   for (let i = 1; i < temp.length; ) {
     const operator = temp[i];
     if (operator === "*" || operator === "/") {
@@ -243,6 +249,7 @@ lygu.addEventListener("click", function () {
     alert("Rezultatas yra per didelis arba neapibrėžtas!");
     return;
   }
+  console.log("Galutinis rezultatas:", result);
   result = Number(result.toFixed(10)); // Round to 10 decimal places
   console.log(result);
   screen.value = result;
