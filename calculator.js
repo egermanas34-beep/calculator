@@ -18,7 +18,17 @@ const numbers = document.querySelectorAll(".skaicius");
 
 numbers.forEach(function (button) {
   button.addEventListener("click", function () {
-    //console.log(button.textContent);
+    const skaicius = button.textContent;
+    const PaskutinisSkaicius = screen.value.split(/\^2|lg|[+\-*\/^√⅟]/).pop();
+    if (skaicius === ".") {
+      if (PaskutinisSkaicius.includes(".")) {
+        return;
+      }
+      if (PaskutinisSkaicius === "") {
+        screen.value += "0";
+      }
+    }
+
     screen.value += button.textContent;
   });
 });
@@ -122,7 +132,7 @@ lygu.addEventListener("click", function () {
       i += 2;
     }
   }
-  for (let i = 0; i < temp.length; ) {
+  for (let i = 0; i < temp.length; i++) {
     const operator = temp[i];
     if (operator === "^2") {
       const left = temp[i - 1];
@@ -170,7 +180,7 @@ lygu.addEventListener("click", function () {
       }
       i = 0; // Move back one index to re-evaluate the new value
     } else {
-      i++;
+      continue;
     }
   }
   for (let i = 1; i < temp.length; ) {
