@@ -143,15 +143,13 @@ lygu.addEventListener("click", function () {
   // Add the last number
   console.log(parts);
   let temp = [...parts];
-  for (let i = 1; i < temp.length; ) {
+  for (let i = temp.length - 2; i >= 1; i--) {
     if (temp[i] === "^") {
       const left = temp[i - 1];
       const right = temp[i + 1];
       const result = Math.pow(left, right);
       temp.splice(i - 1, 3, result);
-      i = 1; // Move back one index to re-evaluate the new value
-    } else {
-      i += 2;
+      //i = 1; // Move back one index to re-evaluate the new value
     }
   }
   for (let i = 0; i < temp.length; i++) {
